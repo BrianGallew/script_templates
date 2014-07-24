@@ -40,13 +40,13 @@ def main():
     logging.debug('main')
     parser = argparse.ArgumentParser()
     # Standard logging options.
-    parser.add_option("-v", "--verbose", dest="verbose", action='store_true',
+    parser.add_argument("-v", "--verbose", dest="verbose", action='store_true',
                       default=False, help="Verbose output")
-    parser.add_option("-d", "--debug", dest="debug", action='store_true',
+    parser.add_argument("-d", "--debug", dest="debug", action='store_true',
                       default=False, help="Debugging output")
-    parser.add_option("--syslog", dest="syslog", metavar="FACILITY",
+    parser.add_argument("--syslog", dest="syslog", metavar="FACILITY",
                       help="Send log messages to the syslog")
-    parser.add_option("--logfile", dest="logfile", metavar="FILENAME",
+    parser.add_argument("--logfile", dest="logfile", metavar="FILENAME",
                       help="Send log messages to a file")
     # script-specific options here
     
