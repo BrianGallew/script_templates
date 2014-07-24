@@ -1,7 +1,7 @@
 #! /usr/bin/env python
-'''
+"""
 What this will do
-'''
+"""
 
 import logging
 # Requires Python 2.7 or better
@@ -37,6 +37,7 @@ def setup_logging(option_group):
 
 
 def main():
+    """Primary entry point."""
     logging.debug('main')
     parser = argparse.ArgumentParser()
     # Standard logging options.
