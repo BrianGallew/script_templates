@@ -1,6 +1,9 @@
 #! /usr/bin/env python
 """
 What this will do
+
+Based on the Python script template at
+https://github.com/BrianGallew/script_templates/blob/master/template.py
 """
 
 import logging
