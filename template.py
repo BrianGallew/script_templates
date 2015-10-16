@@ -10,6 +10,7 @@ import logging
 # Requires Python 2.7 or better
 import argparse
 
+
 def setup_logging(option_group):
     """Sets up logging in a syslog format by log level
     :param option_group: options as returned by the OptionParser
@@ -27,7 +28,8 @@ def setup_logging(option_group):
     handlers = []
     if option_group.syslog:
         handlers.append(logging.SyslogHandler(facility=option_group.syslog))
-        # Use standard format here because timestamp and level will be added by syslogd.
+        # Use standard format here because timestamp and level will be added by
+        # syslogd.
     if option_group.logfile:
         handlers.append(logging.FileHandler(option_group.logfile))
         handlers[0].setFormatter(logging.Formatter(file_log_format))
@@ -41,7 +43,6 @@ def setup_logging(option_group):
 
 def main():
     """Primary entry point."""
-    logging.debug('main')
     parser = argparse.ArgumentParser()
     # Standard logging options.
     parser.add_argument("-v", "--verbose", dest="verbose", action='store_true',
@@ -53,14 +54,14 @@ def main():
     parser.add_argument("--logfile", dest="logfile", metavar="FILENAME",
                         help="Send log messages to a file")
     # script-specific options here
-    
+
     options = parser.parse_args()
     setup_logging(options)
 
     # Your code here.
-    
+
     return
 
-    
+
 if __name__ == '__main__':
     main()
