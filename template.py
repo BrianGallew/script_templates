@@ -7,6 +7,8 @@ https://github.com/BrianGallew/script_templates/blob/master/template.py
 """
 
 import logging
+import logging.handlers
+logger = logging.getLogger(__name__)
 # Requires Python 2.7 or better
 import argparse
 
@@ -17,7 +19,6 @@ def setup_logging(option_group):
     """
     stderr_log_format = "%(levelname) -8s %(asctime)s %(funcName)s line:%(lineno)d: %(message)s"
     file_log_format = "%(asctime)s - %(levelname)s - %(message)s"
-    logger = logging.getLogger()
     if option_group.debug:
         logger.setLevel(level=logging.DEBUG)
     elif option_group.verbose:
@@ -27,7 +28,8 @@ def setup_logging(option_group):
 
     handlers = []
     if option_group.syslog:
-        handlers.append(logging.SyslogHandler(facility=option_group.syslog))
+        handlers.append(
+            logging.handlers.SysLogHandler(facility=option_group.syslog))
         # Use standard format here because timestamp and level will be added by
         # syslogd.
     if option_group.logfile:
@@ -36,6 +38,8 @@ def setup_logging(option_group):
     if not handlers:
         handlers.append(logging.StreamHandler())
         handlers[0].setFormatter(logging.Formatter(stderr_log_format))
+    for handler in logging.root.handlers:
+        logging.root.removeHandler(handler)
     for handler in handlers:
         logger.addHandler(handler)
     return
