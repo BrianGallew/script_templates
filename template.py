@@ -11,9 +11,10 @@ import logging.handlers
 logger = logging.getLogger(__name__)
 # Requires Python 2.7 or better
 import argparse
+option_group = argparse.Namespace()
 
 
-def setup_logging(option_group):
+def setup_logging():
     """Sets up logging in a syslog format by log level
     :param option_group: options as returned by the OptionParser
     """
@@ -49,18 +50,18 @@ def main():
     """Primary entry point."""
     parser = argparse.ArgumentParser()
     # Standard logging options.
-    parser.add_argument("-v", "--verbose", dest="verbose", action='store_true',
+    parser.add_argument("-v", "--verbose", action='store_true',
                         default=False, help="Verbose output")
-    parser.add_argument("-d", "--debug", dest="debug", action='store_true',
+    parser.add_argument("-d", "--debug", action='store_true',
                         default=False, help="Debugging output")
-    parser.add_argument("--syslog", dest="syslog", metavar="FACILITY",
+    parser.add_argument("--syslog", metavar="FACILITY",
                         help="Send log messages to the syslog")
-    parser.add_argument("--logfile", dest="logfile", metavar="FILENAME",
+    parser.add_argument("--logfile", metavar="FILENAME",
                         help="Send log messages to a file")
     # script-specific options here
 
-    options = parser.parse_args()
-    setup_logging(options)
+    parser.parse_args(namespace=option_group)
+    setup_logging()
 
     # Your code here.
 
