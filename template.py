@@ -9,8 +9,8 @@ https://github.com/BrianGallew/script_templates/blob/master/template.py
 import logging
 import logging.handlers
 import argparse
-logger = logging.getLogger(__name__) # pylint: disable=invalid-name
-option_group = argparse.Namespace() # pylint: disable=invalid-name
+logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
+option_group = argparse.Namespace()  # pylint: disable=invalid-name
 
 
 def setup_logging():
@@ -47,8 +47,8 @@ def setup_logging():
 
 def main():
     """Primary entry point."""
-    parser = argparse.ArgumentParser(description = __doc__,
-                                     formatter_class = argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser(description=__doc__,
+                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     # Standard logging options.
     parser.add_argument("-v", "--verbose", action='store_true',
                         default=False, help="Verbose output")
