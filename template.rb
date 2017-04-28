@@ -43,7 +43,7 @@ end
 
 def load_defaults(file)
   begin
-    return JSON.parse(File.read(File.expand_Path(DEFAULTS_FILE)))
+    return JSON.parse(File.read(File.expand_path(DEFAULTS_FILE)))
   rescue Exception
     return {}
   end
