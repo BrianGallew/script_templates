@@ -1,6 +1,9 @@
-#!/usr/bin/env ruby                                                                       require 'aws-sdk'
+#!/usr/bin/env ruby
+require  'json'
 
-OPTIONS = [
+DEFAULTS_FILE=nil # Config in json. Contents will be added to @options
+
+OPTIONS = [ # What options does your code support
   {
     name: "Main Options", type: :seperator
   }, {
@@ -10,9 +13,9 @@ OPTIONS = [
   }, {
     name: "Logging Options", type: :seperator
   }, {
-    name: :log_type, default: "syslog",
+    name: :log_type, default: "stdout",
     short: "L", long: "logtype TYPE",
-    help: "[Default: syslog] Set where to log. Your options are:  syslog, stdout, stderr and file"
+    help: "[Default: syslog] Log destination. Options: syslog, stdout, stderr and file"
   }, {
     name: :logfile,
     short: "O",  long: "logfile FILENAME",
@@ -31,11 +34,19 @@ OPTIONS = [
 
 def main
   @log.info("Starting up")
-  puts "Here I am"
-  p @options
+  @log.info("My options are: #{@options}")
 
+  # Write your code here
 
   @log.info("Shutting down")
+end
+
+def load_defaults(file)
+  begin
+    return JSON.parse(File.read(File.expand_Path(DEFAULTS_FILE)))
+  rescue Exception
+    return {}
+  end
 end
 
 def logger(opts)
@@ -51,15 +62,15 @@ def logger(opts)
              when "stdout" then STDOUT
              when "stderr" then STDERR
              end
-    logger= Logger.new(target)
+    logger = Logger.new(target)
   end
   logger
 end
 
 
-def parse_arguments
+def parse_arguments(defaults)
   require 'optparse'
-  parsed = {}
+  parsed = defaults
   OptionParser.new do |opts|
     opts.banner = "Usage: #{$0} --help"
     parsed[:program_name] = $0
@@ -79,6 +90,7 @@ def parse_arguments
   parsed
 end
 
-@options = parse_arguments
+defaults = load_defaults(DEFAULTS_FILE)
+@options = parse_arguments(defaults)
 @log = logger(@options)
 main
