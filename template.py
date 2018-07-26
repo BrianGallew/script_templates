@@ -40,7 +40,7 @@ def setup_logging():
         logging.root.removeHandler(handler)
     # Add our new handler(s) back in
     for handler in handlers:
-        LOGGER.root.addHandler(handler)
+        logging.root.addHandler(handler)
     return
 
 
