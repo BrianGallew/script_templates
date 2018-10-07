@@ -20,11 +20,10 @@
 # Notes:
 #
 # Bashisms:
-#   $((expr)) instead of "let"
-#   [[ ]] instead of POSIX [ ]
+#   local (works on most non-commercial shells)
 
 
-set -o nounset  # error on referencing an undefined variable
+#set -o nounset  # error on referencing an undefined variable, breaks optarg
 #set -o errexit  # exit on command or pipeline returns non-true
 #set -o pipefail # exit if *any* command in a pipeline fails, not just the last
 
@@ -77,6 +76,9 @@ do
   esac
 done
 
-[[ ${verbosity:-0} -gt 2 ]] && set -x
+[ ${verbosity:-0} -gt 2 ] && set -x
+
+# This pulls all the processed arguments out of $*, so now $1 is the first
+# positional argument.
 shift $((OPTIND - 1))
 
